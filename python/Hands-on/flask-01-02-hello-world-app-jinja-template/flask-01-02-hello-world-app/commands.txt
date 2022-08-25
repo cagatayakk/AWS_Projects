@@ -20,3 +20,6 @@
    20  sudo python3 hello-world-app.py
    21  vim hello-world-app.py
    22  sudo python3 hello-world-app.py
+
+
+   app.run(host="0.0.0.0" , port=80)
