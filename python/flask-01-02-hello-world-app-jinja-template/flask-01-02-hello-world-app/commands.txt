@@ -5,7 +5,7 @@
     5  pip list
     6  pip3 list
     7  sudo yum install git wget
-    8  wget https://raw.githubusercontent.com/armando-cla/myproject/main/python/hands-on/flask-01-02-hello-world-app-Jinja-Template/flask-01-hello-world-app/hello-world-app.py
+    8  wget https://raw.githubusercontent.com/cagatayakk/my-projects/main/python/flask-01-02-hello-world-app-jinja-template/flask-01-02-hello-world-app/hello-world-app.py
     9  ls
    10  cat hello-world-app.py
    11  sudo yum install vim
