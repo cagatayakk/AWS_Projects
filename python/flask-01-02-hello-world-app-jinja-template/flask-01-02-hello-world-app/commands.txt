@@ -6,20 +6,9 @@
     6  pip3 list
     7  sudo yum install git wget
     8  wget https://raw.githubusercontent.com/cagatayakk/my-projects/main/python/flask-01-02-hello-world-app-jinja-template/flask-01-02-hello-world-app/hello-world-app.py
-    9  ls
    10  cat hello-world-app.py
-   11  sudo yum install vim
    12  vim hello-world-app.py
-   13  cat hello-world-app.py
-   14  python3 hello-world-app.py
-   15  vim hello-world-app.py
-   16  cat hello-world-app.py
-   17  python3 hello-world-app.py
-   18  vim hello-world-app.py
-   19  python3 hello-world-app.py
-   20  sudo python3 hello-world-app.py
-   21  vim hello-world-app.py
-   22  sudo python3 hello-world-app.py
 
 
-   app.run(host="0.0.0.0" , port=80)
+   
+app.run(host="0.0.0.0" , port=80)
