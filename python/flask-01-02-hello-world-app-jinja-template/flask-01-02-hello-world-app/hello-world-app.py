@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def head():
-    return "<h1>Hello World Cagatay This is from Clarusway DE</h1>"
+    return "<h1>Hello World</h1>"
 
 @app.route('/second')
 def second():
@@ -18,5 +18,6 @@ def forth(id):
     return f'Id of this page is {id}'
 
 if __name__ == '__main__':
-    #app.run(debug=True)
-    app.run(host="0.0.0.0" , port=80)
+    # app.run(debug=False)
+   # app.run(debug=True)
+ app.run(host='0.0.0.0', port=80)
