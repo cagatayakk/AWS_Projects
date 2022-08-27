@@ -8,7 +8,7 @@
     8  wget https://raw.githubusercontent.com/cagatayakk/my-projects/main/python/flask-01-02-hello-world-app-jinja-template/flask-01-02-hello-world-app/hello-world-app.py
     9  sudo python3 hello-world-app.py
    10  cat hello-world-app.py
-   12  vim hello-world-app.py
+   11  vim hello-world-app.py
 
 
    
