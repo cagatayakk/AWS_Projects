@@ -5,9 +5,9 @@ app = Flask(__name__)
 def head():
     return "<h1>Hello World</h1>"
 
-#@app.route('/second')
-#def second():
-#    return "This is the second page"
+@app.route('/second')
+def second():
+    return "This is the second page"
 
 @app.route('/third/subthird')
 def third():
