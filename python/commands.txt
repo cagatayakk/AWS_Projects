@@ -2,7 +2,6 @@
     2  sudo yum install python3 -y
     3  python3 --version
     4  sudo pip3 install flask
-    5  pip list
     6  pip3 list
     7  sudo yum install git wget -y
     8  wget https://raw.githubusercontent.com/cagatayakk/my-projects/main/python/flask-01-02-hello-world-app-jinja-template/flask-01-02-hello-world-app/hello-world-app.py
