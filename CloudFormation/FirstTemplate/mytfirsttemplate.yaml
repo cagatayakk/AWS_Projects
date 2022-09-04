@@ -1,16 +1,18 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: |
   This template launches an EC2 with a security group that enables SSH.
-  
 Resources:
+  # we delete unnecessary lines
+  # ec2-instance type and enter. here we can use this with help of our extensions
   MyServer:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-05fa00d4c63e32376
       InstanceType: t2.micro
-      KeyName: First_Key # please use your own key without .pem 
+      KeyName: First_Key # here we enter our pem key. here file is without .pem extension
       SecurityGroups:
-        - de_03_first_sg
+        - ssh-sec-grp
+      # this tag will be displayed on the console as a name of EC2
       Tags:
         - Key: Name
-          Value: First-Cfn-Instance
+          Value: Fist-Cfn-Instance
