@@ -8,7 +8,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-05fa00d4c63e32376
-      InstanceType: t2.micro
+      InstanceType: t2.small
       KeyName: First_Key # here we enter our pem key. here file is without .pem extension
       SecurityGroups:
         - ssh-sec-grp
