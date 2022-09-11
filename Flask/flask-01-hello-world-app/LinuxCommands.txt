@@ -6,5 +6,3 @@
    sudo yum install git wget -y
    wget https://raw.githubusercontent.com/cagatayakk/my-projects/main/python/flask-01-02-hello-world-app-jinja-template/flask-01-02-hello-world-app/hello-world-app.py
    sudo python3 hello-world-app.py
-   cat hello-world-app.py
-   vim hello-world-app.py
