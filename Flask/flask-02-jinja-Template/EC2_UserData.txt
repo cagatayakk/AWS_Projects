@@ -3,8 +3,8 @@ yum update -y
 pip3 install flask
 yum install git wget -y
 mkdir templates && cd templates
-wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/python/flask-02-jinja-Template/templates/index.html
-wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/python/flask-02-jinja-Template/templates/body.html
+wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Flask/flask-02-jinja-Template/templates/index.html
+wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Flask/flask-02-jinja-Template/templates/body.html
 cd ..
-wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/python/flask-02-jinja-Template/jinja.py
+wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Flask/flask-02-jinja-Template/jinja.py
 sudo python3 jinja.py
