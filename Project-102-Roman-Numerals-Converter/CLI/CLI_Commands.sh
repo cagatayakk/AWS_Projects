@@ -1,8 +1,9 @@
-#We should update yum package ,remove AWS CLI v1 and install AWS CLI v2
+#We should update yum package , remove AWS CLI v1 and install AWS CLI v2
 sudo yum update -y
 sudo yum remove aws-cli -y
+aws --version
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
+unzip awscliv2.zip   #install "unzip" if not installed
 sudo ./aws/install
 aws --version
 
@@ -53,27 +54,14 @@ aws ec2 run-instances \
 #To see the each instances Ip we'll use describe instance CLI command
 aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers"
 
+#You can run the query to find Public IP and instance_id of instances
+aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers" --query 'Reservations[].Instances[].PublicIpAddress[]'
+
+#To delete instances
+INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=roman_numbers" --query 'Reservations[].Instances[].InstanceId[]' --output text)
+
+aws ec2 terminate-instances --instance-ids $INSTANCE_ID
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#To delete security groups
+aws ec2 delete-security-group --group-name roman_numbers_sec_grp
