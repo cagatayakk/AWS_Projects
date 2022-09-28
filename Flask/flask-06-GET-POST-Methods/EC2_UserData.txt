@@ -2,4 +2,5 @@ yum update -y
 yum install git -y
 pip3 install flask -y
 git clone https://github.com/cagatayakk/AWS_Projects.git
+cd ./Flask/flask-06-GET-POST-Methods
 python3 app.py
