@@ -1,1 +1,1 @@
-# use GET and POST HTTP Method
+# Use GET and POST HTTP Method
