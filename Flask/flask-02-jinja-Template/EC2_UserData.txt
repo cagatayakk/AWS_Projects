@@ -7,4 +7,4 @@ wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Flask/flask-
 wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Flask/flask-02-jinja-Template/templates/body.html
 cd ..
 wget https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Flask/flask-02-jinja-Template/jinja.py
-sudo python3 jinja.py
+python3 jinja.py
