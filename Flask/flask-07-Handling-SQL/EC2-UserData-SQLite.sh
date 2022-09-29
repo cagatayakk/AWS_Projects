@@ -1,3 +1,5 @@
+#!/bin/bash
+
 yum update -y
 pip3 install flask 
 pip3 install flask-mysql
