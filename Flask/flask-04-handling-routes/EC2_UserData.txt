@@ -1,6 +1,6 @@
 yum update -y
 yum install git -y
-pip3 install flask -y
+pip3 install flask
 git clone https://github.com/cagatayakk/AWS_Projects.git
 cd ./AWS_Projects/Flask/flask-04-handling-routes
 python3 app.py
