@@ -1,8 +1,0 @@
-#!/bin/bash
-
-yum update -y
-yum install git -y
-pip3 install flask -y
-git clone https://github.com/cagatayakk/AWS_Projects.git
-cd ./AWS_Projects/Flask/flask-03-if-for-structure
-python3 app.py
