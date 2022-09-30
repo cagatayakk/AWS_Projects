@@ -1,1 +1,1 @@
-# Write a Web Application using If conditions and for loops on EC2
+# Write a Web Application on EC2 using If conditions and for loops 
