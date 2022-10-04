@@ -1,4 +1,4 @@
-# Custom VPC Creation With Private and Public Subnet , Internet Gateway , NAT Gateway and Elastic IP
+# Custom VPC Creation with Private and Public Subnet , Internet Gateway , NAT Gateway and Elastic IP
 ![Architecture_of_Template](Overview.png)
 
 
