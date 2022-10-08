@@ -35,6 +35,9 @@ Parameters:
       Description: Avaibalbility Zone 2
       Type: String
       Default: us-east-1b     
+    KeyName:
+      Description: Select your key pair. 
+      Type: AWS::EC2::KeyPair::KeyName
 Resources:
     DemoVPC:
       Type: AWS::EC2::VPC
@@ -167,7 +170,7 @@ Resources:
         InstanceType: t2.micro
         AvailabilityZone: !Ref AvailabilityZoneA
         SubnetId: !Ref PublicSubnetA
-        KeyName: First_Key          # must change
+        KeyName: !Ref KeyName
         SecurityGroupIds: 
           - !Ref DemoSecurityGroup
         Tags:
