@@ -199,7 +199,7 @@ Resources:
         InstanceType: t2.micro
         AvailabilityZone: !Ref AvailabilityZoneB
         SubnetId: !Ref PrivateSubnetB
-        KeyName: First_Key        # must change
+        KeyName: !Ref KeyName
         SecurityGroupIds: 
           - !Ref DemoSecurityGroup
         Tags:
@@ -213,7 +213,7 @@ Resources:
         InstanceType: t2.micro
         AvailabilityZone: !Ref AvailabilityZoneA
         SubnetId: !Ref PublicSubnetA
-        KeyName: First_Key           # must change
+        KeyName: !Ref KeyName
         SourceDestCheck : false
         SecurityGroupIds: 
           - !Ref DemoSecurityGroup
