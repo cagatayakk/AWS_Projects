@@ -1,0 +1,310 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+    Custom VPC Creation With Private and Public Subnet
+
+Parameters:
+    VPCName:
+      Description: CIDR range for our VPC
+      Type: String
+      Default: DemoCustomVPC 
+    VPCCidr:
+      Description: CIDR range for our VPC
+      Type: String
+      Default: 10.0.0.0/16
+    PublicSubnetACidr:
+      Description: Public Subnet IP Range
+      Type: String
+      Default: 10.0.1.0/24
+    PrivateSubnetACidr:
+      Description: Private Subnet IP Range
+      Type: String
+      Default: 10.0.2.0/24
+    PublicSubnetBCidr:
+      Description: Public Subnet IP Range
+      Type: String
+      Default: 10.0.4.0/24
+    PrivateSubnetBCidr:
+      Description: Private Subnet IP Range
+      Type: String
+      Default: 10.0.5.0/24
+    AvailabilityZoneA:
+      Description: Avaibalbility Zone 1
+      Type: String
+      Default: us-east-1a
+    AvailabilityZoneB:
+      Description: Avaibalbility Zone 2
+      Type: String
+      Default: us-east-1b     
+    KeyName:
+      Description: Select your key pair. 
+      Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+    DemoVPC:
+      Type: AWS::EC2::VPC
+      Properties:
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+        CidrBlock: !Ref VPCCidr
+        Tags:
+          - Key: Name
+            Value: !Ref VPCName
+
+    PrivateSubnetA:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref DemoVPC
+        AvailabilityZone: !Ref AvailabilityZoneA
+        CidrBlock: !Ref PrivateSubnetACidr 
+        Tags:
+          - Key: Name
+            Value: !Sub '${VPCName}-PrivateSubnetA'       
+
+    PrivateSubnetB:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref DemoVPC
+        AvailabilityZone: !Ref AvailabilityZoneB
+        CidrBlock: !Ref PrivateSubnetBCidr
+        Tags:
+          - Key: Name
+            Value: !Sub '${VPCName}-PrivateSubnetB'
+        
+    PublicSubnetA:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref DemoVPC
+        AvailabilityZone: !Ref AvailabilityZoneA
+        CidrBlock: !Ref PublicSubnetACidr
+        MapPublicIpOnLaunch: true 
+        Tags:
+          - Key: Name
+            Value: !Sub '${VPCName}-PublicSubnetA'
+
+    PublicSubnetB:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref DemoVPC
+        AvailabilityZone: !Ref AvailabilityZoneB
+        CidrBlock: !Ref PublicSubnetBCidr
+        MapPublicIpOnLaunch: true
+        Tags:
+          - Key: Name
+            Value: !Sub '${VPCName}-PublicSubnetB'
+
+
+    InternetGateway:
+      Type: AWS::EC2::InternetGateway
+
+    VPCGatewayAttachment:
+      Type: "AWS::EC2::VPCGatewayAttachment"
+      Properties:
+        VpcId: !Ref DemoVPC
+        InternetGatewayId: !Ref InternetGateway
+
+    PublicRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId: !Ref DemoVPC
+
+    PublicRoute:
+      Type: AWS::EC2::Route
+      DependsOn: VPCGatewayAttachment
+      Properties:
+        RouteTableId: !Ref PublicRouteTable
+        DestinationCidrBlock: 0.0.0.0/0
+        GatewayId: !Ref InternetGateway
+
+    PublicSubnetRouteTableAssociationA:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+        SubnetId: !Ref PublicSubnetA
+        RouteTableId: !Ref PublicRouteTable
+
+    PublicSubnetRouteTableAssociationB:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+        SubnetId: !Ref PublicSubnetB
+        RouteTableId: !Ref PublicRouteTable
+        
+    PrivateRouteTableA:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId: !Ref DemoVPC
+
+    PrivateRouteTableB:
+      Type: AWS::EC2::RouteTable
+      Properties:
+        VpcId: !Ref DemoVPC
+
+    PrivateRouteToInternetA:
+      Type: AWS::EC2::Route
+      Properties:
+        RouteTableId: !Ref PrivateRouteTableA
+        DestinationCidrBlock: 0.0.0.0/0
+        InstanceId: !Ref NATInstance
+
+    PrivateRouteToInternetB:
+      Type: AWS::EC2::Route
+      Properties:
+        RouteTableId: !Ref PrivateRouteTableB
+        DestinationCidrBlock: 0.0.0.0/0
+        InstanceId: !Ref NATInstance
+
+    PrivateRouteToClarusVPCA:
+      Type: AWS::EC2::Route
+      Properties:
+        RouteTableId: !Ref PrivateRouteTableA
+        DestinationCidrBlock: 10.7.0.0/16
+        VpcPeeringConnectionId: !Ref PeeringtoClarusVPC
+
+    PrivateRouteToClarusVPCB:
+      Type: AWS::EC2::Route
+      Properties:
+        RouteTableId: !Ref PrivateRouteTableB
+        DestinationCidrBlock: 10.7.0.0/16
+        VpcPeeringConnectionId: !Ref PeeringtoClarusVPC
+
+    PrivateRouteFromClarustoDemoVPC:
+      Type: AWS::EC2::Route
+      Properties:
+        RouteTableId: rtb-0e3f27ef2f3a1055a  # PrivateRouteTableID of DestinationVPC
+        DestinationCidrBlock: 10.0.0.0/16
+        VpcPeeringConnectionId: !Ref PeeringtoClarusVPC
+
+    PrivateSubnetRouteTableAssociationA:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+        SubnetId: !Ref PrivateSubnetA
+        RouteTableId: !Ref PrivateRouteTableA
+
+    PrivateSubnetRouteTableAssociationB:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+        SubnetId: !Ref PrivateSubnetB
+        RouteTableId: !Ref PrivateRouteTableB
+        
+    PeeringtoClarusVPC:
+      Type: AWS::EC2::VPCPeeringConnection
+      Properties:
+        PeerRegion: us-east-1
+        PeerVpcId: vpc-02dbde97822beb5a2
+        Tags: 
+          - Key: Name
+            Value: Peering-From-demo-to-ClarusVPC
+        VpcId: !Ref DemoVPC
+
+    VPCEndpoint:
+      Type: AWS::EC2::VPCEndpoint
+      Properties:
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Principal: '*'
+              Action:
+                - 's3:GetObject'
+              Resource:
+                - '*'
+        RouteTableIds:
+          - !Ref PublicRouteTable
+          - !Ref PrivateRouteTableA
+          - !Ref PrivateRouteTableB
+        ServiceName: !Sub 'com.amazonaws.${AWS::Region}.s3'
+        VpcId: !Ref DemoVPC
+
+    PublicInstance:
+      Type: AWS::EC2::Instance
+      Properties: 
+        ImageId: ami-026b57f3c383c2eec
+        InstanceType: t2.micro
+        AvailabilityZone: !Ref AvailabilityZoneA
+        SubnetId: !Ref PublicSubnetA
+        KeyName: !Ref KeyName
+        SecurityGroupIds: 
+          - !Ref DemoSecurityGroup
+        Tags:
+        - Key: Name
+          Value: !Sub Public-EC2 of ${AWS::StackName}    
+        UserData:
+          Fn::Base64: 
+            !Sub |
+                #! /bin/bash
+                yum update -y
+                yum install httpd -y
+                FOLDER="https://raw.githubusercontent.com/cagatayakk/AWS_Projects/main/Project-101-kittens-carousel-static-website-ec2/static-web"
+                cd /var/www/html
+                wget $FOLDER/index.html
+                wget $FOLDER/cat0.jpg
+                wget $FOLDER/cat1.jpg
+                wget $FOLDER/cat2.jpg
+                wget $FOLDER/cat3.png
+                systemctl start httpd
+                systemctl enable httpd
+
+    PrivateInstance:
+      Type: AWS::EC2::Instance
+      Properties: 
+        ImageId: ami-026b57f3c383c2eec
+        InstanceType: t2.micro
+        AvailabilityZone: !Ref AvailabilityZoneB
+        SubnetId: !Ref PrivateSubnetB
+        KeyName: !Ref KeyName
+        SecurityGroupIds: 
+          - !Ref DemoSecurityGroup
+        Tags:
+        - Key: Name
+          Value: !Sub Private-EC2 of ${AWS::StackName}
+
+    NATInstance:
+      Type: AWS::EC2::Instance
+      Properties: 
+        ImageId: ami-0ee623c33d16bfaa7
+        InstanceType: t2.micro
+        AvailabilityZone: !Ref AvailabilityZoneA
+        SubnetId: !Ref PublicSubnetA
+        KeyName: !Ref KeyName
+        SourceDestCheck : false
+        SecurityGroupIds: 
+          - !Ref DemoSecurityGroup
+        Tags:
+        - Key: Name
+          Value: !Sub NAT-Instance of ${AWS::StackName}    
+
+    DemoSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        VpcId: !Ref DemoVPC
+        GroupDescription: SG to allow SSH and HTTP
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 22
+            ToPort: 22
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: 80
+            ToPort: 80
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: icmp
+            FromPort: -1    # all ports
+            ToPort: -1 
+            CidrIp: 0.0.0.0/0
+        Tags:
+          - Key: Name
+            Value: EC2-SG
+Outputs:
+    VPCId:
+      Description: vpc id 
+      Value: !Ref DemoVPC
+    PublicSubnetA:
+      Description: SubnetId of public subnet A
+      Value: !Ref PublicSubnetA
+    PublicSubnetB:
+      Description: SubnetId of public subnet B
+      Value: !Ref PublicSubnetB 
+    PrivateSubnetA:
+      Description: SubnetId of private subnet A
+      Value: !Ref PrivateSubnetA
+    PrivateSubnetB:
+      Description: SubnetId of private subnet B
+      Value: !Ref PublicSubnetB 
