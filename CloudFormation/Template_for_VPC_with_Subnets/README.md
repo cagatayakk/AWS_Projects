@@ -1,4 +1,4 @@
-# Custom VPC Creation with Private and Public Subnet , Internet Gateway , NAT Gateway , Elastic IP , Endpoint to S3 and Peering Connections
+# Custom VPC Creation with Private and Public Subnet , Internet Gateway , NAT Gateway , NAT-Instance , Elastic IP , Endpoint to S3 and Peering Connections
 ![Architecture_of_Template](Overview.png)
 
 
