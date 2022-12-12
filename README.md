@@ -3,7 +3,7 @@ My AWS Projects  [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f3
 <hr>
 
 <p align="center">
-    <img alt="Python" src="https://github.com/cagatayakk/cagatayakk/blob/main/images/aws.jpg" height="190" width="455">
+    <img alt="Python" src="https://github.com/cagatayakk/cagatayakk/blob/main/images/aws.jpg" height="190" width="300">
 </p>
 <hr>
 
@@ -11,6 +11,8 @@ My AWS Projects  [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f3
 
 ### 🔖 [Capstone_Project_Blog_Page_App_(Django)_on_AWS_Environment](https://github.com/cagatayakk/AWS_Projects/tree/main/Project-501-Capstone-Project-Blog-Page-App-(Django)-on-AWS-Environment)
 The Clarusway Blog Page Application aims to deploy blog application as a web application written Django Framework on AWS Cloud Infrastructure. This infrastructure has Application Load Balancer with Auto Scaling Group of Elastic Compute Cloud (EC2) Instances and Relational Database Service (RDS) on defined VPC. Also, The Cloudfront and Route 53 services are located in front of the architecture and manage the traffic in secure. User is able to upload pictures and videos on own blog page and these are kept on S3 Bucket. This architecture will be created by Firms DevOps Guy.
+
+### 🔖 [Cloudformation](https://github.com/cagatayakk/AWS_Projects/tree/main/CloudFormation)
 
 ### 🔖 [Flask Web Application](https://github.com/cagatayakk/AWS_Projects/tree/main/Flask)
 Purpose of the this hands-on training is introductory knowledge of how to handle forms, how to connect to database and how to use sql within Flask web application on Amazon Linux 2 EC2 instance
